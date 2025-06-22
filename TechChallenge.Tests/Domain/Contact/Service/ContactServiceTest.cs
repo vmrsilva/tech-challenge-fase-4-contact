@@ -1,5 +1,7 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.Configuration;
+using Moq;
 using System.Linq.Expressions;
+using TechChallange.Common.MessagingService;
 using TechChallenge.Contact.Domain.Region.Exception;
 using TechChallenge.Contact.Integration.Region;
 using TechChallenge.Contact.Integration.Region.Dto;
@@ -21,6 +23,8 @@ namespace TechChallenge.Tests.Domain.Contact.Service
         private readonly ContactService _contactServiceMock;
         private readonly Mock<IIntegrationService> _integrationServiceMock;
         private readonly Mock<IRegionIntegration> _regionIntegrationMock;
+        private readonly Mock<IMessagingService> _messagingService;
+        private readonly Mock<IConfiguration> _configuration;
 
         public ContactServiceTest()
         {
@@ -28,8 +32,15 @@ namespace TechChallenge.Tests.Domain.Contact.Service
             _cacheRepositoryMock = new Mock<ICacheRepository>();
             _integrationServiceMock = new Mock<IIntegrationService>();
             _regionIntegrationMock = new Mock<IRegionIntegration>();
+            _messagingService = new Mock<IMessagingService>();
+            _configuration = new Mock<IConfiguration>();
 
-            _contactServiceMock = new ContactService(_contactRepositoryMock.Object, _cacheRepositoryMock.Object, _integrationServiceMock.Object, _regionIntegrationMock.Object);
+            _contactServiceMock = new ContactService(_contactRepositoryMock.Object,
+                                                    _cacheRepositoryMock.Object,
+                                                    _integrationServiceMock.Object,
+                                                    _regionIntegrationMock.Object,
+                                                    _messagingService.Object,
+                                                    _configuration.Object);
         }
 
         [Fact(DisplayName = "Should Create A New Contact With Success")]
@@ -46,10 +57,15 @@ namespace TechChallenge.Tests.Domain.Contact.Service
                  .Setup(x => x.SendResilientRequest<IntegrationBaseResponseDto<RegionGetDto>>(It.IsAny<Func<Task<IntegrationBaseResponseDto<RegionGetDto>>>>()))
                  .ReturnsAsync((IntegrationBaseResponseDto<RegionGetDto>)fakeBaseResponseDto);
 
+            _messagingService
+                  .Setup(ms => ms.SendMessage(It.IsAny<string>(), It.IsAny<object>()))
+                  .ReturnsAsync(true);
+
             await _contactServiceMock.CreateAsync(contact);
 
-            _contactRepositoryMock.Verify(cr => cr.Create(It.IsAny<ContactEntity>()), Times.Once);
             _integrationServiceMock.Verify(ins => ins.SendResilientRequest(It.IsAny<Func<Task<IntegrationBaseResponseDto<RegionGetDto>>>>()), Times.Once);
+
+            _messagingService.Verify(ms => ms.SendMessage(It.IsAny<string>(), It.Is<ContactEntity>(c => c == contact)), Times.Once);
 
         }
 
@@ -219,6 +235,6 @@ namespace TechChallenge.Tests.Domain.Contact.Service
             Assert.Equal(contactMock, result.First());
         }
 
- 
+
     }
 }

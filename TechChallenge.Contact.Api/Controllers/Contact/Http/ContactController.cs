@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TechChallange.Common.MessagingService;
 using TechChallenge.Contact.Api.Controllers.Contact.Dto;
 using TechChallenge.Contact.Api.Response;
 using TechChallenge.Contact.Domain.Region.Exception;

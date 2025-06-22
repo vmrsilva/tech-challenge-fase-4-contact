@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TechChallange.Common.MessagingService;
 using TechChallenge.Contact.Integration.Service;
 using TechChallenge.Domain.Base.Repository;
 using TechChallenge.Domain.Cache;
@@ -22,6 +24,7 @@ namespace TechChallenge.IoC
             ConfigureContact(services);
             ConfigureCache(services, configuration);
             ConfigureIntegration(services);
+            ConfigureMessagingService(services, configuration);
         }
 
         public static void ConfigureContext(IServiceCollection services, IConfiguration configuration)
@@ -58,6 +61,29 @@ namespace TechChallenge.IoC
         private static void ConfigureIntegration(IServiceCollection services)
         {
             services.AddScoped<IIntegrationService, IntegrationService>();
+        }
+
+        public static void ConfigureMessagingService(IServiceCollection services, IConfiguration configuration)
+        {
+            var servidor = configuration.GetSection("MassTransit")["Server"] ?? string.Empty;
+            var usuario = configuration.GetSection("MassTransit")["User"] ?? string.Empty;
+            var senha = configuration.GetSection("MassTransit")["Password"] ?? string.Empty;
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(servidor, "/", h =>
+                    {
+                        h.Username(usuario);
+                        h.Password(senha);
+                    });
+
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+
+            services.AddScoped<IMessagingService, MessagingService>();
         }
     }
 }

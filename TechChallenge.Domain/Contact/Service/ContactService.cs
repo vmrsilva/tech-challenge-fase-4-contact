@@ -1,4 +1,6 @@
-﻿using TechChallenge.Contact.Domain.Region.Exception;
+﻿using Microsoft.Extensions.Configuration;
+using TechChallange.Common.MessagingService;
+using TechChallenge.Contact.Domain.Region.Exception;
 using TechChallenge.Contact.Integration.Region;
 using TechChallenge.Contact.Integration.Region.Dto;
 using TechChallenge.Contact.Integration.Response;
@@ -16,15 +18,24 @@ namespace TechChallenge.Domain.Contact.Service
         private readonly ICacheRepository _cacheRepository;
         private readonly IIntegrationService _integrationService;
         private readonly IRegionIntegration _regionIntegration;
+        private readonly IMessagingService _messagingService;
+        private readonly IConfiguration _configuration;
 
 
-        public ContactService(IContactRepository contactRepository, ICacheRepository cacheRepository,
-                              IIntegrationService integrationService, IRegionIntegration regionIntegration)
+        public ContactService(IContactRepository contactRepository, 
+                              ICacheRepository cacheRepository,
+                              IIntegrationService integrationService, 
+                              IRegionIntegration regionIntegration,
+                              IMessagingService messagingService,
+                              IConfiguration configuration)
         {
             _contactRepository = contactRepository;
             _cacheRepository = cacheRepository;
             _integrationService = integrationService;
             _regionIntegration = regionIntegration;
+            _messagingService = messagingService;
+            _configuration = configuration;
+
         }
 
         public async Task CreateAsync(ContactEntity contactEntity)
@@ -34,7 +45,10 @@ namespace TechChallenge.Domain.Contact.Service
             if (region == null)
                 throw new RegionNotFoundException();
 
-            await _contactRepository.Create(contactEntity).ConfigureAwait(false);
+            var queueName = _configuration["MassTransit:QueueCreateContact"] ?? string.Empty;
+
+            var wasMessageSent = await _messagingService.SendMessage(queueName, contactEntity).ConfigureAwait(false);
+
         }
 
         public async Task<IEnumerable<ContactEntity>> GetAllPagedAsync(int pageSize, int page)

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\tech-challenge-fase-4-region\TechChallange.Common\TechChallange.Common.csproj" />
     <ProjectReference Include="..\TechChallenge.Domain\TechChallenge.Contact.Domain.csproj" />
     <ProjectReference Include="..\TechChallenge.Infrastructure\TechChallenge.Contact.Infrastructure.csproj" />
   </ItemGroup>
