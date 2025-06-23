@@ -3,15 +3,15 @@ using Moq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using TechChallenge.Contact.Api.Controllers.Contact.Dto;
-using TechChallenge.Contact.Integration.Region.Dto;
-using TechChallenge.Tests.IntegrationTests.Setup;
-using TechChallenge.Contact.Integration.Service;
-using TechChallenge.Contact.Tests.Util;
-using TechChallenge.Contact.Integration.Response;
-using TechChallenge.Contact.Api.Response;
+using TechChallange.Contact.Api.Controllers.Contact.Dto;
+using TechChallange.Contact.Integration.Region.Dto;
+using TechChallange.Tests.IntegrationTests.Setup;
+using TechChallange.Contact.Integration.Service;
+using TechChallange.Contact.Tests.Util;
+using TechChallange.Contact.Integration.Response;
+using TechChallange.Contact.Api.Response;
 
-namespace TechChallenge.Tests.IntegrationTests.Controllers.ContactControllerTests
+namespace TechChallange.Tests.IntegrationTests.Controllers.ContactControllerTests
 {
     public class ContactControllerTests(TechChallangeApplicationFactory techChallangeApplicationFactory) : BaseIntegrationTest(techChallangeApplicationFactory)
     {     

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TechChallange.Common.MessagingService;
-using TechChallenge.Contact.Api.Controllers.Contact.Dto;
-using TechChallenge.Contact.Api.Response;
-using TechChallenge.Contact.Domain.Region.Exception;
-using TechChallenge.Domain.Contact.Entity;
-using TechChallenge.Domain.Contact.Exception;
-using TechChallenge.Domain.Contact.Service;
+using TechChallange.Contact.Api.Controllers.Contact.Dto;
+using TechChallange.Contact.Api.Response;
+using TechChallange.Contact.Domain.Region.Exception;
+using TechChallange.Domain.Contact.Entity;
+using TechChallange.Domain.Contact.Exception;
+using TechChallange.Domain.Contact.Service;
 
-namespace TechChallenge.Contact.Api.Controllers.Contact.Http
+namespace TechChallange.Contact.Api.Controllers.Contact.Http
 {
     [ApiController]
     [Route("api/[controller]")]

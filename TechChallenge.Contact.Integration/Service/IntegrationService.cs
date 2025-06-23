@@ -3,7 +3,7 @@ using Refit;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TechChallenge.Contact.Integration.Service
+namespace TechChallange.Contact.Integration.Service
 {
     public class IntegrationService : IIntegrationService
     {

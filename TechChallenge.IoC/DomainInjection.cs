@@ -3,17 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TechChallange.Common.MessagingService;
-using TechChallenge.Contact.Integration.Service;
-using TechChallenge.Domain.Base.Repository;
-using TechChallenge.Domain.Cache;
-using TechChallenge.Domain.Contact.Repository;
-using TechChallenge.Domain.Contact.Service;
-using TechChallenge.Infrastructure.Cache;
-using TechChallenge.Infrastructure.Context;
-using TechChallenge.Infrastructure.Repository.Base;
-using TechChallenge.Infrastructure.Repository.Contact;
+using TechChallange.Contact.Domain.Contact.Messaging;
+using TechChallange.Contact.Integration.Service;
+using TechChallange.Domain.Base.Repository;
+using TechChallange.Domain.Cache;
+using TechChallange.Domain.Contact.Repository;
+using TechChallange.Domain.Contact.Service;
+using TechChallange.Infrastructure.Cache;
+using TechChallange.Infrastructure.Context;
+using TechChallange.Infrastructure.Repository.Base;
+using TechChallange.Infrastructure.Repository.Contact;
 
-namespace TechChallenge.IoC
+namespace TechChallange.IoC
 {
     public static class DomainInjection
     {
@@ -77,6 +78,11 @@ namespace TechChallenge.IoC
                     {
                         h.Username(usuario);
                         h.Password(senha);
+                    });
+
+                    cfg.Message<ContactCreateMessageDto>(m =>
+                    {
+                        m.SetEntityName("contact-insert-exchange");
                     });
 
                     cfg.ConfigureEndpoints(context);

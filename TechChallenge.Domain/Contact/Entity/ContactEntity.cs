@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TechChallenge.Domain.Base.Entity;
+using TechChallange.Domain.Base.Entity;
 
-namespace TechChallenge.Domain.Contact.Entity
+namespace TechChallange.Domain.Contact.Entity
 {
     public class ContactEntity : BaseEntity
     {

@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Domain.Cache
+﻿namespace TechChallange.Domain.Cache
 {
     public interface ICacheRepository
     {

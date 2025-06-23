@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
-using TechChallenge.Domain.Cache;
+using TechChallange.Domain.Cache;
 
-namespace TechChallenge.Infrastructure.Cache
+namespace TechChallange.Infrastructure.Cache
 {
     public class CacheRepository : ICacheRepository
     {

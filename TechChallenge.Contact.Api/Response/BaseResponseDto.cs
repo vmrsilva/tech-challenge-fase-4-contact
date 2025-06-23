@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Contact.Api.Response
+﻿namespace TechChallange.Contact.Api.Response
 {
     public record BaseResponseDto<T> : BaseResponse
     {

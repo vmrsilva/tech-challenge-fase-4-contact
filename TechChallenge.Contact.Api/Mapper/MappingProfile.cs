@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using TechChallenge.Contact.Api.Controllers.Contact.Dto;
-using TechChallenge.Domain.Contact.Entity;
+using TechChallange.Contact.Api.Controllers.Contact.Dto;
+using TechChallange.Domain.Contact.Entity;
 
-namespace TechChallenge.Contact.Api.Mapper
+namespace TechChallange.Contact.Api.Mapper
 {
     public class MappingProfile : Profile
     {

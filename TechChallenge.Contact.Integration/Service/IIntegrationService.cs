@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Contact.Integration.Service
+﻿namespace TechChallange.Contact.Integration.Service
 {
     public interface IIntegrationService
     {

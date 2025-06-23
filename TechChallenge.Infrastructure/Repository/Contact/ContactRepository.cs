@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using TechChallenge.Domain.Base.Repository;
-using TechChallenge.Domain.Contact.Entity;
-using TechChallenge.Domain.Contact.Repository;
-using TechChallenge.Infrastructure.Context;
+using TechChallange.Domain.Base.Repository;
+using TechChallange.Domain.Contact.Entity;
+using TechChallange.Domain.Contact.Repository;
+using TechChallange.Infrastructure.Context;
 
-namespace TechChallenge.Infrastructure.Repository.Contact
+namespace TechChallange.Infrastructure.Repository.Contact
 {
     public class ContactRepository : IContactRepository
     {

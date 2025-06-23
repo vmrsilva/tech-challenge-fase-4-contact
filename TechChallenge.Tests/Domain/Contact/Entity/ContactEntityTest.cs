@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
 using AutoMapper;
-using TechChallenge.Contact.Api.Controllers.Contact.Dto;
-using TechChallenge.Domain.Contact.Entity;
+using TechChallange.Contact.Api.Controllers.Contact.Dto;
+using TechChallange.Domain.Contact.Entity;
 
-namespace TechChallenge.Tests.Domain.Contact.Entity
+namespace TechChallange.Tests.Domain.Contact.Entity
 {
     public class ContactEntityTest
     {

@@ -7,17 +7,17 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System.Runtime.InteropServices;
-using TechChallenge.Contact.Integration.Service;
-using TechChallenge.Contact.Tests.Util;
-using TechChallenge.Domain.Cache;
-using TechChallenge.Domain.Contact.Entity;
-using TechChallenge.Infrastructure.Cache;
-using TechChallenge.Infrastructure.Context;
+using TechChallange.Contact.Integration.Service;
+using TechChallange.Contact.Tests.Util;
+using TechChallange.Domain.Cache;
+using TechChallange.Domain.Contact.Entity;
+using TechChallange.Infrastructure.Cache;
+using TechChallange.Infrastructure.Context;
 using Testcontainers.MsSql;
 using Testcontainers.RabbitMq;
 using Testcontainers.Redis;
 
-namespace TechChallenge.Tests.IntegrationTests.Setup
+namespace TechChallange.Tests.IntegrationTests.Setup
 {
     public class TechChallangeApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {

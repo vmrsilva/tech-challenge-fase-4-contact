@@ -1,7 +1,7 @@
-﻿using TechChallenge.Contact.Integration.Region.Dto;
-using TechChallenge.Contact.Integration.Response;
+﻿using TechChallange.Contact.Integration.Region.Dto;
+using TechChallange.Contact.Integration.Response;
 
-namespace TechChallenge.Contact.Tests.Util
+namespace TechChallange.Contact.Tests.Util
 {
     public static class Util
     {

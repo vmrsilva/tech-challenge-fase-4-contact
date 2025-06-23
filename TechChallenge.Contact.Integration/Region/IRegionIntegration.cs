@@ -1,8 +1,8 @@
 ﻿using Refit;
-using TechChallenge.Contact.Integration.Region.Dto;
-using TechChallenge.Contact.Integration.Response;
+using TechChallange.Contact.Integration.Region.Dto;
+using TechChallange.Contact.Integration.Response;
 
-namespace TechChallenge.Contact.Integration.Region
+namespace TechChallange.Contact.Integration.Region
 {
     public interface IRegionIntegration
     {

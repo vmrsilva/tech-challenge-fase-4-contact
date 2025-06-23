@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechChallenge.Contact.Integration.Region.Dto
+namespace TechChallange.Contact.Integration.Region.Dto
 {
     public record RegionGetDto
     {

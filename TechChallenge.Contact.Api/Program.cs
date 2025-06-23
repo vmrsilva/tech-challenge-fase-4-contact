@@ -2,10 +2,10 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using Prometheus.SystemMetrics;
 using AutoMapper;
-using TechChallenge.Contact.Api.Mapper;
+using TechChallange.Contact.Api.Mapper;
 using Prometheus;
-using TechChallenge.IoC;
-using TechChallenge.Contact.Integration.Region;
+using TechChallange.IoC;
+using TechChallange.Contact.Integration.Region;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);

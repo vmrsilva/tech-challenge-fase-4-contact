@@ -2,19 +2,19 @@
 using Moq;
 using System.Linq.Expressions;
 using TechChallange.Common.MessagingService;
-using TechChallenge.Contact.Domain.Region.Exception;
-using TechChallenge.Contact.Integration.Region;
-using TechChallenge.Contact.Integration.Region.Dto;
-using TechChallenge.Contact.Integration.Response;
-using TechChallenge.Contact.Integration.Service;
-using TechChallenge.Contact.Tests.Util;
-using TechChallenge.Domain.Cache;
-using TechChallenge.Domain.Contact.Entity;
-using TechChallenge.Domain.Contact.Exception;
-using TechChallenge.Domain.Contact.Repository;
-using TechChallenge.Domain.Contact.Service;
+using TechChallange.Contact.Domain.Region.Exception;
+using TechChallange.Contact.Integration.Region;
+using TechChallange.Contact.Integration.Region.Dto;
+using TechChallange.Contact.Integration.Response;
+using TechChallange.Contact.Integration.Service;
+using TechChallange.Contact.Tests.Util;
+using TechChallange.Domain.Cache;
+using TechChallange.Domain.Contact.Entity;
+using TechChallange.Domain.Contact.Exception;
+using TechChallange.Domain.Contact.Repository;
+using TechChallange.Domain.Contact.Service;
 
-namespace TechChallenge.Tests.Domain.Contact.Service
+namespace TechChallange.Tests.Domain.Contact.Service
 {
     public class ContactServiceTest
     {

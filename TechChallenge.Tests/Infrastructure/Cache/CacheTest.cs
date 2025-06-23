@@ -1,9 +1,9 @@
 ﻿using Moq;
 using Newtonsoft.Json;
-using TechChallenge.Domain.Cache;
-using TechChallenge.Infrastructure.Cache;
+using TechChallange.Domain.Cache;
+using TechChallange.Infrastructure.Cache;
 
-namespace TechChallenge.Tests.Infrastructure.Cache
+namespace TechChallange.Tests.Infrastructure.Cache
 {
     public class CacheTest
     {
