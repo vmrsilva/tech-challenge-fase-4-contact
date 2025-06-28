@@ -2,6 +2,7 @@
 using Moq;
 using System.Linq.Expressions;
 using TechChallange.Common.MessagingService;
+using TechChallange.Contact.Domain.Contact.Messaging;
 using TechChallange.Contact.Domain.Region.Exception;
 using TechChallange.Contact.Integration.Region;
 using TechChallange.Contact.Integration.Region.Dto;
@@ -23,7 +24,7 @@ namespace TechChallange.Tests.Domain.Contact.Service
         private readonly ContactService _contactServiceMock;
         private readonly Mock<IIntegrationService> _integrationServiceMock;
         private readonly Mock<IRegionIntegration> _regionIntegrationMock;
-        private readonly Mock<IMessagingService> _messagingService;
+        private readonly Mock<IMessagingService> _messagingServiceMock;
         private readonly Mock<IConfiguration> _configuration;
 
         public ContactServiceTest()
@@ -32,14 +33,14 @@ namespace TechChallange.Tests.Domain.Contact.Service
             _cacheRepositoryMock = new Mock<ICacheRepository>();
             _integrationServiceMock = new Mock<IIntegrationService>();
             _regionIntegrationMock = new Mock<IRegionIntegration>();
-            _messagingService = new Mock<IMessagingService>();
+            _messagingServiceMock = new Mock<IMessagingService>();
             _configuration = new Mock<IConfiguration>();
 
             _contactServiceMock = new ContactService(_contactRepositoryMock.Object,
                                                     _cacheRepositoryMock.Object,
                                                     _integrationServiceMock.Object,
                                                     _regionIntegrationMock.Object,
-                                                    _messagingService.Object,
+                                                    _messagingServiceMock.Object,
                                                     _configuration.Object);
         }
 
@@ -57,7 +58,7 @@ namespace TechChallange.Tests.Domain.Contact.Service
                  .Setup(x => x.SendResilientRequest<IntegrationBaseResponseDto<RegionGetDto>>(It.IsAny<Func<Task<IntegrationBaseResponseDto<RegionGetDto>>>>()))
                  .ReturnsAsync((IntegrationBaseResponseDto<RegionGetDto>)fakeBaseResponseDto);
 
-            _messagingService
+            _messagingServiceMock
                   .Setup(ms => ms.SendMessage(It.IsAny<string>(), It.IsAny<object>()))
                   .ReturnsAsync(true);
 
@@ -65,7 +66,7 @@ namespace TechChallange.Tests.Domain.Contact.Service
 
             _integrationServiceMock.Verify(ins => ins.SendResilientRequest(It.IsAny<Func<Task<IntegrationBaseResponseDto<RegionGetDto>>>>()), Times.Once);
 
-            _messagingService.Verify(ms => ms.SendMessage(It.IsAny<string>(), It.Is<ContactEntity>(c => c == contact)), Times.Once);
+            _messagingServiceMock.Verify(ms => ms.SendMessage(It.IsAny<string>(), It.IsAny<ContactCreateMessageDto>()), Times.Once);
 
         }
 
