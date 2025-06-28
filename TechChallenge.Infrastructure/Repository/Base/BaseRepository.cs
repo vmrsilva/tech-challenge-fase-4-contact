@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using TechChallenge.Domain.Base.Entity;
-using TechChallenge.Domain.Base.Repository;
-using TechChallenge.Infrastructure.Context;
+using TechChallange.Domain.Base.Entity;
+using TechChallange.Domain.Base.Repository;
+using TechChallange.Infrastructure.Context;
 
-namespace TechChallenge.Infrastructure.Repository.Base
+namespace TechChallange.Infrastructure.Repository.Base
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {

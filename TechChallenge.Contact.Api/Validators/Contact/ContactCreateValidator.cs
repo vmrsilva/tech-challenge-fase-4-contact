@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using TechChallenge.Contact.Api.Controllers.Contact.Dto;
+using TechChallange.Contact.Api.Controllers.Contact.Dto;
 
-namespace TechChallenge.Contact.Api.Validators.Contact
+namespace TechChallange.Contact.Api.Validators.Contact
 {
     public class ContactCreateValidator : AbstractValidator<ContactCreateDto>
     {

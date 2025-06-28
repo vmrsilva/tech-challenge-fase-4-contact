@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Contact.Api.Controllers.Contact.Dto
+﻿namespace TechChallange.Contact.Api.Controllers.Contact.Dto
 {
     public record ContactUpdateDto
     {

@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Domain.Contact.Exception
+﻿namespace TechChallange.Domain.Contact.Exception
 {
     public class ContactNotFoundException : System.Exception
     {

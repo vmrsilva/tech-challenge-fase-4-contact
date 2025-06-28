@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TechChallenge.Infrastructure.Context;
+using TechChallange.Infrastructure.Context;
 
 #nullable disable
 
-namespace TechChallenge.Infrastructure.Migrations
+namespace TechChallange.Infrastructure.Migrations
 {
     [DbContext(typeof(TechChallangeContext))]
     [Migration("20250420135934_create-table-contact")]

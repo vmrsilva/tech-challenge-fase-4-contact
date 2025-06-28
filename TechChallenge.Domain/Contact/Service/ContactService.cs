@@ -1,14 +1,17 @@
-﻿using TechChallenge.Contact.Domain.Region.Exception;
-using TechChallenge.Contact.Integration.Region;
-using TechChallenge.Contact.Integration.Region.Dto;
-using TechChallenge.Contact.Integration.Response;
-using TechChallenge.Contact.Integration.Service;
-using TechChallenge.Domain.Cache;
-using TechChallenge.Domain.Contact.Entity;
-using TechChallenge.Domain.Contact.Exception;
-using TechChallenge.Domain.Contact.Repository;
+﻿using Microsoft.Extensions.Configuration;
+using TechChallange.Common.MessagingService;
+using TechChallange.Contact.Domain.Contact.Messaging;
+using TechChallange.Contact.Domain.Region.Exception;
+using TechChallange.Contact.Integration.Region;
+using TechChallange.Contact.Integration.Region.Dto;
+using TechChallange.Contact.Integration.Response;
+using TechChallange.Contact.Integration.Service;
+using TechChallange.Domain.Cache;
+using TechChallange.Domain.Contact.Entity;
+using TechChallange.Domain.Contact.Exception;
+using TechChallange.Domain.Contact.Repository;
 
-namespace TechChallenge.Domain.Contact.Service
+namespace TechChallange.Domain.Contact.Service
 {
     public class ContactService : IContactService
     {
@@ -16,15 +19,24 @@ namespace TechChallenge.Domain.Contact.Service
         private readonly ICacheRepository _cacheRepository;
         private readonly IIntegrationService _integrationService;
         private readonly IRegionIntegration _regionIntegration;
+        private readonly IMessagingService _messagingService;
+        private readonly IConfiguration _configuration;
 
 
-        public ContactService(IContactRepository contactRepository, ICacheRepository cacheRepository,
-                              IIntegrationService integrationService, IRegionIntegration regionIntegration)
+        public ContactService(IContactRepository contactRepository,
+                              ICacheRepository cacheRepository,
+                              IIntegrationService integrationService,
+                              IRegionIntegration regionIntegration,
+                              IMessagingService messagingService,
+                              IConfiguration configuration)
         {
             _contactRepository = contactRepository;
             _cacheRepository = cacheRepository;
             _integrationService = integrationService;
             _regionIntegration = regionIntegration;
+            _messagingService = messagingService;
+            _configuration = configuration;
+
         }
 
         public async Task CreateAsync(ContactEntity contactEntity)
@@ -34,7 +46,10 @@ namespace TechChallenge.Domain.Contact.Service
             if (region == null)
                 throw new RegionNotFoundException();
 
-            await _contactRepository.Create(contactEntity).ConfigureAwait(false);
+            var queueName = _configuration["MassTransit:QueueCreateContact"] ?? string.Empty;
+
+            var wasMessageSent = await _messagingService.SendMessage(queueName, new ContactCreateMessageDto { Email = contactEntity.Email, Name = contactEntity.Name, Phone = contactEntity.Phone, RegionId = contactEntity.RegionId, Id = contactEntity.Id }).ConfigureAwait(false);
+
         }
 
         public async Task<IEnumerable<ContactEntity>> GetAllPagedAsync(int pageSize, int page)

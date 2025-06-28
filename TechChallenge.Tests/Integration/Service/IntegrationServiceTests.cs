@@ -1,9 +1,9 @@
 ﻿using Refit;
 using System.Net.Sockets;
 using System.Net;
-using TechChallenge.Contact.Integration.Service;
+using TechChallange.Contact.Integration.Service;
 
-namespace TechChallenge.Contact.Tests.Integration.Service
+namespace TechChallange.Contact.Tests.Integration.Service
 {
     public class IntegrationServiceTests
     {

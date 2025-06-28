@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TechChallenge.Infrastructure.Migrations
+namespace TechChallange.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class createtablecontact : Migration

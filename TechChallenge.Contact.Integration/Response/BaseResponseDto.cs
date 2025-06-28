@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Contact.Integration.Response
+﻿namespace TechChallange.Contact.Integration.Response
 {
     public record IntegrationBaseResponseDto<T> : IntegrationBaseResponse
     {

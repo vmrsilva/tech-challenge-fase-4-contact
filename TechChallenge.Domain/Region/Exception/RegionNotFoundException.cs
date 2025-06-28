@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Contact.Domain.Region.Exception
+﻿namespace TechChallange.Contact.Domain.Region.Exception
 {
     public class RegionNotFoundException : System.Exception
     {

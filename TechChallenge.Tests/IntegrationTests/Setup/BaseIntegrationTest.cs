@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using TechChallenge.Infrastructure.Context;
+using TechChallange.Infrastructure.Context;
 
-namespace TechChallenge.Tests.IntegrationTests.Setup
+namespace TechChallange.Tests.IntegrationTests.Setup
 {
     public class BaseIntegrationTest : IClassFixture<TechChallangeApplicationFactory>, IDisposable
     {

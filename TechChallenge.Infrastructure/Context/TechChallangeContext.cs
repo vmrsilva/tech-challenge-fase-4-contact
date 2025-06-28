@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TechChallenge.Domain.Contact.Entity;
+using TechChallange.Domain.Contact.Entity;
 
-namespace TechChallenge.Infrastructure.Context
+namespace TechChallange.Infrastructure.Context
 {
     public class TechChallangeContext : DbContext
     {

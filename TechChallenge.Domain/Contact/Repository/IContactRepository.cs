@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
-using TechChallenge.Domain.Contact.Entity;
+using TechChallange.Domain.Contact.Entity;
 
-namespace TechChallenge.Domain.Contact.Repository
+namespace TechChallange.Domain.Contact.Repository
 {
     public interface IContactRepository
     {

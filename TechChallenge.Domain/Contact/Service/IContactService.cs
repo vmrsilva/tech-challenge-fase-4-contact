@@ -1,6 +1,6 @@
-﻿using TechChallenge.Domain.Contact.Entity;
+﻿using TechChallange.Domain.Contact.Entity;
 
-namespace TechChallenge.Domain.Contact.Service
+namespace TechChallange.Domain.Contact.Service
 {
     public interface IContactService
     {

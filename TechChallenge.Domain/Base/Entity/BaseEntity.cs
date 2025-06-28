@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Domain.Base.Entity
+﻿namespace TechChallange.Domain.Base.Entity
 {
     public class BaseEntity
     {

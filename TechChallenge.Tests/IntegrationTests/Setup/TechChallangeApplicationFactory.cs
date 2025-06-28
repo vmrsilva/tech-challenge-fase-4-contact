@@ -1,4 +1,5 @@
 ﻿using DotNet.Testcontainers.Builders;
+using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -6,22 +7,26 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System.Runtime.InteropServices;
-using TechChallenge.Contact.Integration.Service;
-using TechChallenge.Contact.Tests.Util;
-using TechChallenge.Domain.Cache;
-using TechChallenge.Domain.Contact.Entity;
-using TechChallenge.Infrastructure.Cache;
-using TechChallenge.Infrastructure.Context;
+using TechChallange.Contact.Integration.Service;
+using TechChallange.Contact.Tests.Util;
+using TechChallange.Domain.Cache;
+using TechChallange.Domain.Contact.Entity;
+using TechChallange.Infrastructure.Cache;
+using TechChallange.Infrastructure.Context;
 using Testcontainers.MsSql;
+using Testcontainers.RabbitMq;
 using Testcontainers.Redis;
 
-namespace TechChallenge.Tests.IntegrationTests.Setup
+namespace TechChallange.Tests.IntegrationTests.Setup
 {
     public class TechChallangeApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
         private readonly MsSqlContainer _msSqlContainer;
         private readonly RedisContainer _redisContainer;
         private readonly Mock<IIntegrationService> _integrationServiceMock;
+        private readonly RabbitMqContainer _rabbitMqContainer;
+        private readonly string _rabbitPwd = "guest";
+        private readonly string _rabbitUser = "guest";
 
         public TechChallangeApplicationFactory()
         {
@@ -40,7 +45,17 @@ namespace TechChallenge.Tests.IntegrationTests.Setup
                 _msSqlContainer = new MsSqlBuilder().Build();
             }
 
-            _redisContainer = new RedisBuilder().Build();            
+            _redisContainer = new RedisBuilder().Build();
+
+            _rabbitMqContainer = new RabbitMqBuilder()
+                .WithImage("masstransit/rabbitmq:latest")
+                .WithUsername(_rabbitPwd)
+                .WithPassword(_rabbitUser)
+                .WithPortBinding(5672, 5672)
+                .WithPortBinding(15672, 15672) // RabbitMQ Management
+                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(5672))
+                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(15672))
+                .Build();
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -51,6 +66,8 @@ namespace TechChallenge.Tests.IntegrationTests.Setup
                 ConfigureCache(services);
 
                 MockServices(services);
+
+                ConfigureRabbitMq(services);
             });
 
             //builder.UseEnvironment("Development");
@@ -110,6 +127,38 @@ namespace TechChallenge.Tests.IntegrationTests.Setup
             services.AddScoped<ICacheWrapper, CacheWrapper>();
         }
 
+        private void ConfigureRabbitMq(IServiceCollection services)
+        {
+            var rabbitMq = services.FirstOrDefault(descriptor => descriptor.ServiceType == typeof(IBus));
+            if (rabbitMq != null)
+            {
+                services.Remove(rabbitMq);
+            }
+
+            var descriptorsToRemove = services
+                .Where(d => d.ServiceType.FullName.Contains("MassTransit"))
+                .ToList();
+
+            foreach (var descriptor in descriptorsToRemove)
+            {
+                services.Remove(descriptor);
+            }
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(_rabbitMqContainer.Hostname, "/", h =>
+                    {
+                        h.Username(_rabbitUser);
+                        h.Password(_rabbitPwd);
+                    });
+
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+        }
+
         private void MockServices(IServiceCollection services)
         {
             var integration = services.FirstOrDefault(descriptor => descriptor.ServiceType == typeof(IIntegrationService));
@@ -126,12 +175,15 @@ namespace TechChallenge.Tests.IntegrationTests.Setup
             await _msSqlContainer.StartAsync();
 
             await _redisContainer.StartAsync();
+
+            await _rabbitMqContainer.StartAsync();
         }
 
         public async new Task DisposeAsync()
         {
             await _msSqlContainer.StopAsync();
             await _redisContainer.StopAsync();
+            await _rabbitMqContainer.StopAsync();
         }
 
         public Mock<IIntegrationService> GetIntegrationServiceMock()
